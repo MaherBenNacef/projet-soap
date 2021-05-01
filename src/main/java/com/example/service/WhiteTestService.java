@@ -18,11 +18,14 @@ import de.tekup.soap.models.whitetest.WhiteTestResponse;
 
 @Service
 public class WhiteTestService {
-	
-	public List<Student> students ;
 
-	public WhiteTestService(List<Student> students) {
-		this.students = new ArrayList<>();
+	public WhiteTestResponse getStudentStatus(StudentRequest studentRequest) throws DatatypeConfigurationException {
+		Boolean testId=false;
+		Boolean testCode=false;
+		int id=0;
+		int code=0;
+		List<Student> students = new ArrayList<>() ;
+		List<Exam> exams = new ArrayList<>() ;
 		for (int i=1; i<11;i++) {
 			Student s = new Student();
 			s.setId(i);
@@ -30,46 +33,49 @@ public class WhiteTestService {
 			s.setAddress("address"+i);
 			students.add(s);
 		}
-	}
-	
-	public Boolean exist(int id) {
-		for (Student student : students) {
-			if(student.getId()==id) {
-				return false;
+		for (int i=1; i<11;i++) {
+			Exam e = new Exam();
+			e.setCode("1z0-80"+i);
+			e.setName("OCA");
+			exams.add(e);
+		}
+		//tester si l'id de studient existe dans la liste ou non 
+		for (int i=0;i<students.size();i++) {
+			if(students.get(i).getId()==studentRequest.getStudentId()) {
+				testId=true;
+				id=i;
+				break;
 			}
 		}
-		return true;
-	}
+		//tester si le code de l'exam existe dans la liste ou non 
+		for (int i=0;i<exams.size();i++) {
+			if(exams.get(i).getCode().equalsIgnoreCase(studentRequest.getExamCode())) {
+				testCode=true;
+				code=i;
+				break;
+			}
+		}
 
-
-	public WhiteTestResponse getStudentStatus(StudentRequest studentRequest) throws DatatypeConfigurationException {
-		String examName="";
 		WhiteTestResponse whiteTestResponse = new ObjectFactory().createWhiteTestResponse();
 		List<String> mismatchs =whiteTestResponse.getCriteriaMismatch();
-		if(studentRequest.getStudentId()==0 || studentRequest.getStudentId()<0 ) {
+		if(studentRequest.getStudentId()==0 || studentRequest.getStudentId()<0 || !(testId)) {
 			mismatchs.add("wrong student id");
 		}
 		if(studentRequest.getExamCode().isEmpty()) {
-			mismatchs.add("exam code must be not enpty");
+			mismatchs.add("exam code must be not empty");
+		}
+		if(!(testCode))
+		{
+			mismatchs.add("wrong exam code");
 		}
 		if(mismatchs.isEmpty()) {
 			Student student = new Student();
 			student.setId(studentRequest.getStudentId());
-			student.setName("Student"+studentRequest.getStudentId());
-			student.setAddress("Address"+studentRequest.getStudentId());
+			student.setName(students.get(id).getName());
+			student.setAddress((students.get(id).getAddress()));
 			Exam exam = new Exam();
 			exam.setCode(studentRequest.getExamCode());
-			if(studentRequest.getExamCode().equalsIgnoreCase("1z0-808"))
-			{
-				examName="Java OCA";
-			}else if (studentRequest.getExamCode().equalsIgnoreCase("1Z0-819")) {
-				examName="Java OCP";
-			}else if (studentRequest.getExamCode().equalsIgnoreCase("1z0-897")) {
-				examName="Java OCE";
-			}else {
-				examName=studentRequest.getExamCode();
-			}
-			exam.setName(examName);
+			exam.setName(exams.get(code).getName());
 			whiteTestResponse.setStudent(student);
 			whiteTestResponse.setExam(exam);
 			LocalDate localDate = LocalDate.now().plusDays(3);
