@@ -17,6 +17,8 @@ targetNamespace="http://www.tekup.de/soap/models/whitetest" elementFormDefault="
                 <xsd:element name="student" type="tns:Student"/>
                 <xsd:element name="exam" type="tns:Exam"/>
                 <xsd:element name="date" type="xsd:dateTime"/>
+                <xsd:element name="isValid" type="xsd:boolean" />
+                <xsd:element name="criteriaMismatch" type="xsd:string" maxOccurs="unbounded" />
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
