@@ -23,6 +23,8 @@ public class WhitetestEndPoint {
 	@ResponsePayload
 	public WhiteTestResponse checkWhiteTest (@RequestPayload StudentRequest studentRequest) throws DatatypeConfigurationException {
 		
-		return service.getStudentStatus(studentRequest);
+		//return service.getStudentStatus(studentRequest);
+		//return null;
+		return service.getStudentStatus2(studentRequest);
 	}
 }
