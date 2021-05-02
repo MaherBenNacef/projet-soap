@@ -21,6 +21,7 @@ import de.tekup.soap.models.whitetest.WhiteTestResponse;
 @Service
 public class WhiteTestService {
 
+	//service avec Address de type String
 	/*public WhiteTestResponse getStudentStatus(StudentRequest studentRequest) throws DatatypeConfigurationException {
 		Boolean testId=false;
 		Boolean testCode=false;
@@ -90,6 +91,7 @@ public class WhiteTestService {
 		}
 		return whiteTestResponse;
 	}*/
+	//service avec Address de type complexe
 	public WhiteTestResponse getStudentStatus2(StudentRequest studentRequest) throws DatatypeConfigurationException {
 		Boolean testId=false;
 		Boolean testCode=false;
