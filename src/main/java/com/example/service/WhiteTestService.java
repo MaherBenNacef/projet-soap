@@ -1,8 +1,8 @@
 package com.example.service;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -11,7 +11,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.springframework.stereotype.Service;
 
-import de.tekup.soap.models.whitetest.Address;
+
 import de.tekup.soap.models.whitetest.Exam;
 import de.tekup.soap.models.whitetest.ObjectFactory;
 import de.tekup.soap.models.whitetest.Student;
@@ -27,21 +27,9 @@ public class WhiteTestService {
 		Boolean testCode=false;
 		int id=0;
 		int code=0;
-		List<Student> students = new ArrayList<>() ;
-		List<Exam> exams = new ArrayList<>() ;
-		for (int i=1; i<11;i++) {
-			Student s = new Student();
-			s.setId(i);
-			s.setName("Student"+i);
-			s.setAddress("address"+i);
-			students.add(s);
-		}
-		for (int i=1; i<11;i++) {
-			Exam e = new Exam();
-			e.setCode("1z0-80"+i);
-			e.setName("OCA");
-			exams.add(e);
-		}
+		List<Student> students = new Student().getStudents() ;
+		List<Exam> exams = new Exam().getExams() ;
+		
 		//tester si l'id de studient existe dans la liste ou non 
 		for (int i=0;i<students.size();i++) {
 			if(students.get(i).getId()==studentRequest.getStudentId()) {
@@ -91,31 +79,19 @@ public class WhiteTestService {
 		}
 		return whiteTestResponse;
 	}*/
+
+	
+/*****************************************************************************************************************************/
+	
 	//service avec Address de type complexe
 	public WhiteTestResponse getStudentStatus2(StudentRequest studentRequest) throws DatatypeConfigurationException {
 		Boolean testId=false;
 		Boolean testCode=false;
 		int id=0;
 		int code=0;
-		List<Student> students = new ArrayList<>() ;
-		List<Exam> exams = new ArrayList<>() ;
-		for (int i=1; i<11;i++) {
-			Student s = new Student();
-			s.setId(i);
-			s.setName("Student"+i);
-			Address a = new Address();
-			a.setCity("city"+i);
-			a.setPosteCode(1140+i);
-			a.setStreet("street"+i);
-			s.setAddress(a);
-			students.add(s);
-		}
-		for (int i=1; i<11;i++) {
-			Exam e = new Exam();
-			e.setCode("1z0-80"+i);
-			e.setName("OCA");
-			exams.add(e);
-		}
+		List<Student> students = new Student().getStudents() ;
+		List<Exam> exams = new Exam().getExams() ;
+
 		//tester si l'id de studient existe dans la liste ou non 
 		for (int i=0;i<students.size();i++) {
 			if(students.get(i).getId()==studentRequest.getStudentId()) {
@@ -166,4 +142,7 @@ public class WhiteTestService {
 		return whiteTestResponse;
 	}
 
+	public List<Exam> getExams(){
+		return new Exam().getExams();
+	}
 }

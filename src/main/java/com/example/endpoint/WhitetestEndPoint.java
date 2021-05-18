@@ -1,5 +1,7 @@
 package com.example.endpoint;
 
+import java.util.List;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import com.example.service.WhiteTestService;
 
+import de.tekup.soap.models.whitetest.Exam;
 import de.tekup.soap.models.whitetest.StudentRequest;
 import de.tekup.soap.models.whitetest.WhiteTestResponse;
 
@@ -27,4 +30,10 @@ public class WhitetestEndPoint {
 		//return null;
 		return service.getStudentStatus2(studentRequest);
 	}
+	
+	
+	public List<Exam> getAvailableExams(){
+		return service.getExams();
+	}
+	
 }

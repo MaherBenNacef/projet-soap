@@ -8,6 +8,9 @@
 
 package de.tekup.soap.models.whitetest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -112,5 +115,20 @@ public class Student {
     public void setAddress(Address value) {
         this.address = value;
     }
+	public List<Student> getStudents() {
+		List<Student> students = new ArrayList<>();
+		for (int i=1; i<11;i++) {
+		Student s = new Student();
+		s.setId(i);
+		s.setName("Student"+i);
+		Address a = new Address();
+		a.setCity("city"+i);
+		a.setPosteCode(1140+i);
+		a.setStreet("street"+i);
+		s.setAddress(a);
+		students.add(s);
+		}
+		return students;
+	}
 
 }

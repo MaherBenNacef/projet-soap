@@ -8,6 +8,9 @@
 
 package de.tekup.soap.models.whitetest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -45,8 +48,14 @@ public class Exam {
     protected String code;
     @XmlElement(required = true)
     protected String name;
+    
+    //protected List<Exam> exams;
+    
+    
 
-    /**
+  
+
+	/**
      * Gets the value of the code property.
      * 
      * @return
@@ -93,5 +102,19 @@ public class Exam {
     public void setName(String value) {
         this.name = value;
     }
+
+	public List<Exam> getExams() {
+		List<Exam> exams = new ArrayList<>();
+		for (int i=1; i<11;i++) {
+		Exam e = new Exam();
+		e.setCode("1z0-80"+i);
+		e.setName("OCA");
+		exams.add(e);
+		}
+		return exams;
+	}
+
+
+    
 
 }
